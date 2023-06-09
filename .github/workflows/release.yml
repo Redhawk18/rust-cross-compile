@@ -22,3 +22,9 @@ jobs:
           path: .
       - name: find my shit
         run: pwd && ls -lah my-project*
+      - name: Upload Binaries to Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: my-project*/*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
