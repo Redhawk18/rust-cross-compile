@@ -38,7 +38,7 @@ jobs:
       - name:  Install
         run:   |
          if [ "$RUNNER_OS" == "Linux" ]; then
-              apt install -y librust-atk-dev
+              sudo apt install -y librust-atk-dev
          fi
         shell: bash
 
