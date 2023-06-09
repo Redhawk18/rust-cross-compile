@@ -40,7 +40,7 @@ jobs:
          if [ "$RUNNER_OS" == "Linux" ]; then
               apt install -y librust-atk-dev
          fi
-  shell: bash
+        shell: bash
 
 
       - name: Build binary
