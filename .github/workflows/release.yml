@@ -22,8 +22,11 @@ jobs:
         with:
           path: ./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
 
-      - name: Upload Artifacts to GitHub Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: ncipollo/release-action@v1
-          allowUpdates: true
+      - name: find my shit
+      run: pwd && ls -lah
+
+      # - name: Upload Artifacts to GitHub Release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     artifacts: ncipollo/release-action@v1
+      #     allowUpdates: true

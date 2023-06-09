@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      
   workflow_call:
 
 jobs:
@@ -36,6 +37,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
         with:
@@ -43,6 +45,7 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: "--release"
           strip: true
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
