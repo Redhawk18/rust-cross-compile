@@ -2,10 +2,7 @@ name: Build
 
 on: 
   push:
-    branches:
-      - main
-
-  workflow_call:
+    branches: [ '**' ]
 
 jobs:
   release:
@@ -19,17 +16,17 @@ jobs:
             bin: my-project
             command: build
 
-          # - release_for: macOS-x86_64
-          #   os: macOS-latest
-          #   target: x86_64-apple-darwin
-          #   bin: my-project
-          #   command: both
+          - release_for: macOS-x86_64
+            os: macOS-latest
+            target: x86_64-apple-darwin
+            bin: my-project
+            command: both
 
-          # - release_for: Windows-x86_64
-          #   os: windows-latest
-          #   target: x86_64-pc-windows-msvc
-          #   bin: my-project.exe
-          #   command: both
+          - release_for: Windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            bin: my-project.exe
+            command: both
 
             # more release targets here ...
 
@@ -37,6 +34,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name:  Install
+        run:   |
+         if [ "$RUNNER_OS" == "Linux" ]; then
+              apt install -y librust-atk-dev
+         fi
+  shell: bash
+
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
