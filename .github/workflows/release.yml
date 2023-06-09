@@ -18,10 +18,10 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
-          name: *
+          path: ./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
 
       - name: Upload Artifacts to GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: *
+          artifacts: ncipollo/release-action@v1
           allowUpdates: true
