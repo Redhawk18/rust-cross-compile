@@ -20,7 +20,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
-          path: ./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
+          path: ./target/release/my-project-x86_64-unknown-linux-gnu
       - name: find my shit
       run: pwd && ls -lah
 
