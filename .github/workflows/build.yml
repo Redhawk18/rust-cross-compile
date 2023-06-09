@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    name: Release - ${{ matrix.platform.release_for }}
+    name: ${{ matrix.platform.release_for }}
     strategy:
       matrix:
         platform:
@@ -47,5 +47,3 @@ jobs:
         with:
           name: my-project-${{ matrix.platform.target }}
           path: ./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
-
-    # more packaging stuff goes here ...
