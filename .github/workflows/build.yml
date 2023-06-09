@@ -3,7 +3,7 @@ name: build
 on: 
   push:
     branches:
-      - compile
+      - main
   # workflow_call:
 
 jobs:
