@@ -26,5 +26,5 @@ jobs:
       - name: Upload Artifacts to GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: ./target/release/my-project-x86_64-unknown-linux-gnu/my-project-x86_64-unknown-linux-gnu
+          artifacts: "target/release/my-project-x86_64-unknown-linux-gnu/my-project-x86_64-unknown-linux-gnu"
           allowUpdates: true
