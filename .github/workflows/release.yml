@@ -21,9 +21,8 @@ jobs:
           path: ./target/release/my-project-x86_64-unknown-linux-gnu
       - name: find my shit
       run: pwd && ls -lah
-
-      # - name: Upload Artifacts to GitHub Release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     artifacts: ncipollo/release-action@v1
-      #     allowUpdates: true
+      - name: Upload Artifacts to GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ncipollo/release-action@v1
+          allowUpdates: true
