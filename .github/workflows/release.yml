@@ -19,11 +19,12 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
+          name: builds
           path: ./target/release/my-project-x86_64-unknown-linux-gnu
       - name: find my shit
         run: pwd && ls -lah
       - name: Upload Artifacts to GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: ncipollo/release-action@v1
+          artifacts: my-project-x86_64-unknown-linux-gnu
           allowUpdates: true
