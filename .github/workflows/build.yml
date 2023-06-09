@@ -45,12 +45,12 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: "--release"
           strip: true
-      - name: where are my files
-        run: ls -lahR .
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: precious
-      #     path: ./target/release/precious
+      # - name: where are my files
+      #   run: ls -lahR .
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: precious
+          path: ./target/${{ matrix.platform.target }}/release/rust-cross-compile
 
     # more packaging stuff goes here ...
