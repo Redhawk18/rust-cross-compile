@@ -14,13 +14,13 @@ jobs:
           - release_for: Linux-x86_64
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            bin: my-project.bin
+            bin: my-project
             command: build
 
           - release_for: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
-            bin: my-project.bin
+            bin: my-project
             command: both
 
           - release_for: Windows-x86_64
