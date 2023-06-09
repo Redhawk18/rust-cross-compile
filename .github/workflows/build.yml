@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: my-project
-          - if: ${{ matrix.platform.target }} == Windows-x86_64
+          - if: "${{ matrix.platform.target }} == Windows-x86_64"
             with: ./target/${{ matrix.platform.target }}/release/my-project
           path: ./target/${{ matrix.platform.target }}/release/my-project
 
