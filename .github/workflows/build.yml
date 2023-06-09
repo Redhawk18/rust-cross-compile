@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - compile
+  # workflow_call:
 
 jobs:
   release:
