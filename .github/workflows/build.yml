@@ -39,7 +39,7 @@ jobs:
 
       - name:  Install
         run: |
-          if [ matrix.os == 'Linux' ]; then
+          if [ "$RUNNER_OS" == 'Linux' ]; then
             sudo apt install -y libgtk-3-dev librust-atk-dev 
           fi
         shell: bash
@@ -64,7 +64,7 @@ jobs:
         shell: bash
 
       - name: Archive Artifacts
-        if: ${{ matrix.os == 'Linux' }}
+        if: ${{ "$RUNNER_OS" == 'Linux' }}
         uses: actions/upload-artifact@v3
         with:
           name: my-project-appimage
