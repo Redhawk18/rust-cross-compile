@@ -61,6 +61,13 @@ jobs:
           cp target/release/my-project appdir/usr/bin
           ./appimagetool.AppImage appdir
 
+      - name: Archive Artifacts
+        if: matrix.platform == 'linux'
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-project-appimage
+          path: my-project-x86_64.AppImage
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
