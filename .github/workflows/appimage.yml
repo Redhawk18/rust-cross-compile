@@ -15,8 +15,7 @@ jobs:
       matrix:
         platform:
           - linux
-          - macos
-          - windows
+
 
     steps:
       - name: Checkout Repository
