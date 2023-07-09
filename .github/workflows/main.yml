@@ -1,0 +1,45 @@
+name: Build, Test, Audit, and Clippy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test-clippy-audit:
+    name: Build, Test, Clippy, and Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions/setup-rust@v1
+        with:
+          rust-version: stable
+          profile: minimal
+
+      - name: Cache Rust dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cargo
+          key: ${{ runner.os }}-rust-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build project
+        run: cargo build --verbose
+
+      - name: Test project
+        run: cargo test --verbose
+
+      - name: Run Clippy
+        if: success()
+        run: cargo clippy -- -D warnings
+
+      - name: Run Audit
+        if: success() && steps.cache.outputs.cache-hit != 'true'
+        run: cargo audit
