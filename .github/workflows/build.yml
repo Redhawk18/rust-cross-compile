@@ -64,7 +64,7 @@ jobs:
         shell: bash
 
       - name: Archive Artifacts
-        if: ${{ "$RUNNER_OS" == 'Linux' }}
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v3
         with:
           name: my-project-appimage
