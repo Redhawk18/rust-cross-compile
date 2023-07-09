@@ -38,10 +38,10 @@ jobs:
       - uses: Swatinem/rust-cache@v2
 
       - name:  Install
-        run:   |
-         if [ "$RUNNER_OS" == "Linux" ]; then
-              sudo apt install -y libgtk-3-dev librust-atk-dev 
-         fi
+        run: |
+          if [ matrix.os == "Linux" ]; then
+            sudo apt install -y libgtk-3-dev librust-atk-dev 
+          fi
         shell: bash
       
       - name: Build binary
@@ -53,17 +53,19 @@ jobs:
           strip: true
 
       - name: Create AppImage (Linux)
-        if: matrix.platform == 'linux'
         run: |
-          wget -O appimagetool.AppImage https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
-          chmod +x appimagetool.AppImage
-          mkdir -p appdir/usr/bin
-          cp target/release/my-project appdir/usr/bin
-          ./appimagetool.AppImage appdir
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            wget -O appimagetool.AppImage https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
+            chmod +x appimagetool.AppImage
+            mkdir -p appdir/usr/bin
+            cp target/release/my-project appdir/usr/bin
+            ./appimagetool.AppImage appdir
+          fi
+        shell: bash
 
       - name: Archive Artifacts
-        if: matrix.platform == 'linux'
-        uses: actions/upload-artifact@v2
+        if: ${{ matrix.os == "Linux" }}
+        uses: actions/upload-artifact@v3
         with:
           name: my-project-appimage
           path: my-project-x86_64.AppImage
