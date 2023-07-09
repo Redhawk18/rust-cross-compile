@@ -52,6 +52,15 @@ jobs:
           args: "--release"
           strip: true
 
+      - name: Create AppImage (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          wget -O appimagetool.AppImage https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
+          chmod +x appimagetool.AppImage
+          mkdir -p appdir/usr/bin
+          cp target/release/my-project appdir/usr/bin
+          ./appimagetool.AppImage appdir
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
