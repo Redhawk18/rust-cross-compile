@@ -5,9 +5,9 @@ on: [pull_request]
 jobs:
   Setup:
     runs-on: ubuntu-latest
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: clippy rustfmt
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy rustfmt
 
   Format:
     needs: Setup
@@ -16,7 +16,7 @@ jobs:
 
   Clippy:
     needs: Setup
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
 
 
       # - name: Checkout code
