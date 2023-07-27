@@ -11,12 +11,14 @@ jobs:
 
   Format:
     needs: Setup
-      - name: Check format
-        run: cargo fmt --all -- --check
+    runs-on: ubuntu-latest
+    
+    - name: Check format
+      run: cargo fmt --all -- --check
 
   Clippy:
     needs: Setup
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
 
       # - name: Checkout code
