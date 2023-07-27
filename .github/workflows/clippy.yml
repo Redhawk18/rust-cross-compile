@@ -21,23 +21,7 @@ jobs:
     needs: Setup
     runs-on: ubuntu-latest
     steps:
-
-
-      # - name: Checkout code
-      #   uses: actions/checkout@v3
-
-      # - name:  Install
-      #   run: |
-      #     if [ "$RUNNER_OS" == 'Linux' ]; then
-      #       sudo apt install -y libgtk-3-dev librust-atk-dev
-      #     fi
-      #   shell: bash
-
-        - uses: Swatinem/rust-cache@v2
-
-        # - uses: dtolnay/rust-toolchain@stable
-        #   with:
-        #     components: clippy
-
-        - name: Run Clippy
-          run: cargo clippy --all -- -D warnings --verbose
+      - uses: Swatinem/rust-cache@v2
+      
+      - name: Run Clippy
+        run: cargo clippy --all -- -D warnings --verbose
