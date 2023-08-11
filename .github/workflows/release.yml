@@ -52,7 +52,7 @@ jobs:
         id: upload_to_release
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           asset_path: ./downloaded_artifacts/${{ matrix.platform.bin }}
           asset_name: ${{ matrix.platform.bin }}
