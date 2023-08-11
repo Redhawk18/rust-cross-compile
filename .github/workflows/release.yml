@@ -1,0 +1,60 @@
+name: Upload Artifacts to Release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  upload_artifacts:
+    name: Upload Artifacts to Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Find the Build Workflow Run
+        id: find_build_run
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const workflowName = 'build.yml';  # Replace with the actual filename of your Build workflow
+            const runs = await github.actions.listWorkflowRuns({
+              Redhawk18,
+              rust-cross-compile,
+              workflow_id: Build,
+              status: 'completed',
+              branch: github.event.release.target_commitish
+            });
+
+            const latestRun = runs.workflow_runs[0];
+
+            if (latestRun) {
+              console.log(`Found the latest build run: ${latestRun.id}`);
+              core.setOutput('build_run_id', latestRun.id);
+
+            } else {
+              console.error('No completed build runs found.');
+              process.exit(1);
+              
+            }
+
+      - name: Download Build Artifacts
+        id: download_artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: blaze-${{ matrix.platform.target }}
+          path: ./downloaded_artifacts/
+
+      - name: Upload Artifacts to Release
+        id: upload_to_release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_path: ./downloaded_artifacts/${{ matrix.platform.bin }}
+          asset_name: ${{ matrix.platform.bin }}
+          asset_content_type: application/octet-stream
+          release_id: ${{ github.event.release.id }}
