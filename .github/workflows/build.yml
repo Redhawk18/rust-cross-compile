@@ -3,8 +3,7 @@ name: Build
 on: 
   push:
     branches: [ '**' ]
-    paths: src/**
-  
+    #paths: src/**
 
 jobs:
   release:
@@ -15,38 +14,42 @@ jobs:
           - release_for: Linux-x86_64
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            bin: ${{ github.event.repository.name }}
+            bin: blaze
             command: build
 
           - release_for: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
-            bin: ${{ github.event.repository.name }}
+            bin: blaze
             command: both
 
           - release_for: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
-            bin: ${{ github.event.repository.name }}.exe
+            bin: blaze.exe
             command: both
 
             # more release targets here ...
 
     runs-on: ${{ matrix.platform.os }}
+    outputs:
+      artifact_path: ${{ steps.upload.outputs.artifact_path }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: Swatinem/rust-cache@v2
-
-      - name:  Install
+      - name: Install
         run: |
-          if [ "$RUNNER_OS" == 'Linux' ]; then
-            sudo apt install -y libgtk-3-dev librust-atk-dev
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            sudo apt update
+            sudo apt install -y libgtk-3-dev librust-atk-dev 
           fi
         shell: bash
-      
+
+      - uses: Swatinem/rust-cache@v2
+
       - name: Build binary
+        id: build
         uses: houseabsolute/actions-rust-cross@v0
         with:
           command: ${{ matrix.platform.command }}
@@ -55,7 +58,12 @@ jobs:
           strip: true
 
       - name: Upload Artifacts
+        id: upload
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.repository.name }}-${{ matrix.platform.target }}
+          name: blaze-${{ matrix.platform.target }}
           path: ./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
+
+      - name: Set artifact path output
+        id: set_artifact_path
+        run: echo "::set-output name=artifact_path::${{ steps.upload.outputs.artifact_path }}"
