@@ -4,6 +4,10 @@ on:
   release:
     types:
       - created
+  workflow_run:
+    workflows: ["Build"]
+    types: 
+      - completed
 
 jobs:
   upload_artifacts:
