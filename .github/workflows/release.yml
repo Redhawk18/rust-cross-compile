@@ -14,19 +14,19 @@ jobs:
           - release_for: Linux-x86_64
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            bin: rust-cross-compile-${{ matrix.platform.target }}
+            bin: rust-cross-compile-Linux-x86_64
             command: build
 
           - release_for: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
-            bin: rust-cross-compile-${{ matrix.platform.target }}
+            bin: rust-cross-compile-macOS-x86_64
             command: both
 
           - release_for: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
-            bin: rust-cross-compile-${{ matrix.platform.target }}.exe
+            bin: rust-cross-compile-Windows-x86_64.exe
             command: both
 
             # more release targets here ...
