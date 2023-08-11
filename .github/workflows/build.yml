@@ -3,7 +3,9 @@ name: Build
 on: 
   push:
     branches: [ '**' ]
-    #paths: src/**
+    paths: 
+      - src/**
+      - cargo.toml
 
 jobs:
   release:
