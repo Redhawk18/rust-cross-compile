@@ -3,7 +3,7 @@ name: Build
 on: 
   push:
     branches: [ '**' ]
-    paths: src/**
+    #paths: src/**
 
 jobs:
   release:
