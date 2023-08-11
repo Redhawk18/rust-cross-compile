@@ -14,19 +14,19 @@ jobs:
           - release_for: Linux-x86_64
             os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            bin: rust-cross-compile-Linux-x86_64
+            bin: rust-cross-compile
             command: build
 
           - release_for: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
-            bin: rust-cross-compile-macOS-x86_64
+            bin: rust-cross-compile
             command: both
 
           - release_for: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
-            bin: rust-cross-compile-Windows-x86_64.exe
+            bin: rust-cross-compile.exe
             command: both
 
             # more release targets here ...
@@ -53,11 +53,16 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: "--release"
           strip: true
-      
+
+      - name:  Install
+        run:   |
+         mv ./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }} ./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}-${{ matrix.platform.target }}
+        shell: bash
+
       - uses: xresloader/upload-to-github-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          file: "./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}"
+          file: "./target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}-${{ matrix.platform.target }}"
           tags: true
           draft: true
